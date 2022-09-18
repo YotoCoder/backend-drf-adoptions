@@ -13,6 +13,6 @@ services:
     environment:
       - PYTHONUNBUFFERED=0
     ports:
-      - 8000:8000
+      - 80:8000
     expose:
       - 80
