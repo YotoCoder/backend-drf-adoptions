@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3'
 
 services:
   django-app:
@@ -10,7 +10,7 @@ services:
       - .:/app
     command: >
       sh -c "python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:8000"
+             gunicorn core.wsgi --bind 0.0.0.0:8000"
     environment:
       - PYTHONUNBUFFERED=0
     ports:
