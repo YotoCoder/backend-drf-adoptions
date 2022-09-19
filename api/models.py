@@ -18,7 +18,7 @@ class Pet(models.Model):
     def __str__(self) -> str:
         return self.name
 
-# Test Pet
+# Test
 class ModelPetTest(models.Model):
     name = models.CharField(max_length=10)
     img = models.ImageField(upload_to='img/petstes/', blank=True, null=True)
