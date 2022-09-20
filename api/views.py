@@ -10,5 +10,5 @@ class PetView(viewsets.ModelViewSet):
 
 class PetTestView(viewsets.ModelViewSet):
     queryset = ModelPetTest.objects.all()
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = PetTestSerializer

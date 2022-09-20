@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_simplejwt',
     'corsheaders',
     'api',
     'resources',
@@ -123,8 +124,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static/")]
 
 MEDIA_ROOT = f'{BASE_DIR}/media/'
 MEDIA_URL = 'media/'
@@ -138,3 +139,23 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Cors
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+
+# Rest framework settings
+
+SIMPLE_JWT = {
+
+     # Use JWT 
+     'AUTH_HEADER_TYPES': ('Bearer',),
+     # 'AUTH_HEADER_TYPES': ('Bearer',),
+
+}
+
+REST_FRAMEWORK = {
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+}
+
