@@ -5,7 +5,7 @@ from .serializers import PetSerializer, PetTestSerializer
 
 class PetView(viewsets.ModelViewSet):
     queryset = Pet.objects.all()
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = PetSerializer
 
 class PetTestView(viewsets.ModelViewSet):
