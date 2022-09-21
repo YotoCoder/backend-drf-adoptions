@@ -15,14 +15,15 @@ class RecoverPassword(APIView):
 
     link = os.environ.get('HOST_FRONT')
 
-    def post(self, request, *args, **kwargs): # Recibe un email lo busca y si se encuentra le envia el link de restauración al correo
+    def post(self, request, *args, **kwargs): # Recibe un email lo busca y si se encuentra algun usuario le envia el link de restauración al correo
 
         try:
             email = request.data['email']
             email = User.objects.filter(email=email).values('email')[0]['email']
+            user_id = User.objects.filter(email=email).values('id')[0]['id']
             token = secrets.token_urlsafe(20)
             url = f'{self.link}/email-recover?token={token}'
-            
+
             send_mail(
                 'Recuperación de contraseña.',
                 f'Por favor ingrese a este link {url} para reestablecer su contraseña.',
@@ -30,7 +31,7 @@ class RecoverPassword(APIView):
                 [email],
                 fail_silently=False,
             )
-            Secret(token=token).save()
+            Secret(user_id=user_id, token=token).save()
             
             return Response(
                 {
@@ -42,16 +43,30 @@ class RecoverPassword(APIView):
             return Response(
                     {
                         'message':'Lo sentimos no tiene ningun correo registrado, comuniquese con el area de soporte!',
-                    },
-                status=HTTP_400_BAD_REQUEST
-            )
+                   
+            }, status=HTTP_400_BAD_REQUEST)
 
 
     def get(self, request, *args, **kwargs):
 
         token = request.query_params.get('token')
 
-        return Response({
-            'message': str(token),
-            
-        }, status=HTTP_200_OK)
+        if Secret.objects.filter(token=token):
+
+            token = Secret.objects.filter(token=token)
+            user_id = token.values()[0]['user_id']
+            user_name = User.objects.filter(id=user_id).values('username')[0]['username']
+            token.delete()
+
+            return Response({
+                'accept': True,
+                'username': user_name
+            }, status=HTTP_200_OK)
+        else:
+            return Response({
+                'accept': False,
+                'message': 'Parece que su link a expirado, vuelva a solicitar uno.',
+                'url': f'{self.link}/email-recover'
+                
+            }, status=HTTP_400_BAD_REQUEST)
+
