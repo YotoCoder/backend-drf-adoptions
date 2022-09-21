@@ -20,16 +20,18 @@ class RecoverPassword(APIView):
         try:
             email = request.data['email']
             email = User.objects.filter(email=email).values('email')[0]['email']
-            
             token = secrets.token_urlsafe(20)
-
+            url = f'{self.link}/email-recover?token={token}'
+            
             send_mail(
                 'Recuperación de contraseña.',
-                f'Por favor ingrese a este link {self.link}/{token} para reestablecer su contraseña.',
+                f'Por favor ingrese a este link {url} para reestablecer su contraseña.',
                 EMAIL_HOST_USER,
                 [email],
                 fail_silently=False,
             )
+            Secret(token=token).save()
+            
             return Response(
                 {
                     'message':f'Se va enviado un link al correo {Crypto.encrip_email(email)} con los pasos para restaurar su contraseña.'
@@ -44,7 +46,12 @@ class RecoverPassword(APIView):
                 status=HTTP_400_BAD_REQUEST
             )
 
-class UpdatePasswors(APIView):
 
-    def get(self, request):
-        pass
+    def get(self, request, *args, **kwargs):
+
+        token = request.query_params.get('token')
+
+        return Response({
+            'message': str(token),
+            
+        }, status=HTTP_200_OK)
