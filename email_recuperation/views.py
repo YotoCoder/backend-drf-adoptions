@@ -76,7 +76,7 @@ class RecoverPassword(APIView):
 
     def patch(self, request, *args, **kwargs):
         """
-        Actauliza la contraseña del usuario
+        Actualiza la contraseña del usuario
         Recibe el username y la nueva contraseña
         params: username, password
         """
