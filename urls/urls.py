@@ -4,8 +4,8 @@ from user.views import UserViewSet
 
 router = DefaultRouter()
 
-router.register('api/pet', PetView, 'petview')
-router.register('api/test', PetTestView, 'test')
-router.register('api/users', UserViewSet, 'users')
+router.register('pets', PetView, 'petview')
+# router.register('api/test', PetTestView, 'test')
+router.register('users', UserViewSet, 'users')
 
 urlpatterns = router.urls

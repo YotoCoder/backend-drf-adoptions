@@ -34,9 +34,9 @@ urlpatterns = [
     path('', include('urls.urls')),
 
     # Auth routes
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 
     # Email recover test
     path('email-recover/', RecoverPassword.as_view(), name='recover-password'),
@@ -44,5 +44,9 @@ urlpatterns = [
     # documentación
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redocs/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+
+
+    # Debug toolbar
+    path('__debug__/', include('debug_toolbar.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
