@@ -1,6 +1,6 @@
-from rest_framework import viewsets, permissions, generics
-from .models import Pet, ModelPetTest
-from .serializers import PetSerializer, PetTestSerializer
+from rest_framework import viewsets, permissions
+from .models import Pet
+from .serializers import PetSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 
 
@@ -11,15 +11,9 @@ class PetView(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
 
     filterset_fields = {
-    'age': ['gt', 'lt'],
-    'sex': ['exact'],
-    'size': ['gt', 'lt'],
+        'age': ['gt', 'lt', 'exact'],
+        'sex': ['exact'],
+        'size': ['gt', 'lt', 'exact'],
 
-    'city': ['contains'],
+        'city': ['contains'],
     }
-
-class PetTestView(viewsets.ModelViewSet):
-    queryset = ModelPetTest.objects.all()
-    permission_classes = [permissions.AllowAny]
-    serializer_class = PetTestSerializer
-
