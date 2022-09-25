@@ -11,9 +11,9 @@ class PetView(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
 
     filterset_fields = {
-    'age': ['gt', 'lt'],
-    'sex': ['exact'],
-    'size': ['gt', 'lt'],
+        'age': ['gt', 'lt', 'exact'],
+        'sex': ['exact'],
+        'size': ['gt', 'lt', 'exact'],
 
-    'city': ['contains'],
+        'city': ['contains'],
     }
