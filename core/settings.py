@@ -201,21 +201,21 @@ DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": lambda request: True,
 }
 
-INTERNAL_IPS = [
+# INTERNAL_IPS = [
 
-    '0.0.0.1',
-    '127.0.0.1',
+#   '0.0.0.1',
+#   '127.0.0.1',
 
-]
+# ]
 
 
 # User auth model change to profiles.User
-
 AUTH_USER_MODEL = 'user.User'
 
 # Mail config
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # SERVER_MAIL = 'no-reply@domain.com'
+
 EMAIL_HOST='smtp-mail.outlook.com'
 EMAIL_PORT=587
 DEFAULT_FROM_EMAIL='yotoelectronics@hotmail.com'
