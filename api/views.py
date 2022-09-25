@@ -9,9 +9,17 @@ class PetView(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     serializer_class = PetSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['age', 'sex', 'size']
+
+    filterset_fields = {
+    'age': ['gt', 'lt'],
+    'sex': ['exact'],
+    'size': ['gt', 'lt'],
+
+    'city': ['contains'],
+    }
 
 class PetTestView(viewsets.ModelViewSet):
     queryset = ModelPetTest.objects.all()
     permission_classes = [permissions.AllowAny]
     serializer_class = PetTestSerializer
+
