@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'urls',
     'email_recuperation',
     'resources',
+    'helpers',
 ]
 
 MIDDLEWARE = [

@@ -6,9 +6,8 @@ from rest_framework.response import Response
 from user.models import User
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
-
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
-from .crypto import Crypto
+from helpers.crypto import Crypto
 from .models import Secret
 
 
