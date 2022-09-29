@@ -5,9 +5,9 @@
 # SERVER_MAIL = 'no-reply@domain.com'
 EMAIL_HOST='smtp-mail.outlook.com'
 EMAIL_PORT=587
-DEFAULT_FROM_EMAIL='yotoelectronics@hotmail.com'
-EMAIL_HOST_USER='yotoelectronics@hotmail.com'
-EMAIL_HOST_PASSWORD='yoto-.-.'
+DEFAULT_FROM_EMAIL='tuemail@hotmail.com'
+EMAIL_HOST_USER='tuemail@hotmail.com'
+EMAIL_HOST_PASSWORD='clavesiña'
 EMAIL_USE_TLS=True
 
 # views.py
@@ -19,10 +19,10 @@ send_mail(
     'Asunto importante uwu',
     'Contexto del mensaje ewe.',
     EMAIL_HOST_USER,
-    ['yotoelectronics@gmail.com'],
+    ['yourmail@gmail.com'],
     fail_silently=False,
     )
 
 # Test console
 
-python manage.py sendtestemail yotoelectronics@gmail.com
+python manage.py sendtestemail emailfortest@gmail.com
