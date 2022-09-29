@@ -1,8 +1,9 @@
 from rest_framework import serializers
-from .models import Pet
+from .models import User
 
-class PetSerializer(serializers.ModelSerializer):
+
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Pet
+        model = User
         fields = '__all__'
         read_only_fields = ('create_at',)

@@ -1,14 +1,28 @@
 from rest_framework import viewsets, permissions
-from .models import Pet, ModelPetTest
+from .models import Pet
+from .serializers import PetSerializer
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
-from .serializers import PetSerializer, PetTestSerializer
 
 class PetView(viewsets.ModelViewSet):
     queryset = Pet.objects.all()
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
     serializer_class = PetSerializer
+    filter_backends = [DjangoFilterBackend]
 
-class PetTestView(viewsets.ModelViewSet):
-    queryset = ModelPetTest.objects.all()
-    permission_classes = [permissions.IsAuthenticated]
-    serializer_class = PetTestSerializer
+    filterset_fields = {
+        'age': ['gt', 'lt', 'exact'],
+        'sex': ['exact'],
+        'size': ['gt', 'lt', 'exact'],
+
+        'city': ['contains'],
+    }
+
+
+    # Create view
+    @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    def test_view(self, request):
+
+        return Response({'test': 'test'})
