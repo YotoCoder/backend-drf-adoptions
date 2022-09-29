@@ -6,9 +6,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response 
 from django.core.mail import send_mail
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
-import secrets
 from django.conf.global_settings import EMAIL_HOST_USER
-from helpers.crypto import Crypto
+
 
 # Create your views here.
 
@@ -17,6 +16,42 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserSerializer
 
+class UserRegister(APIView):
+    """
+    Recive una petición POST y registra un nuevo usuario
+    los datos del usuario se reciben en el body de la petición
+    en formato JSON, se valida que el email no exista en la base de datos
+    y se envia un correo de bienvenida al usuario.
+
+    {
+        "password": "password",
+        "username": "username",
+        "email": "nombre@gmail.com",
+        "phone": "925119585"
+    }
+    
+    queda pendiente agrega confirmación al usuario con un link de verificación.
+
+    """
+    def post(self, request, format=None):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():    
+            email = serializer.validated_data['email']
+            if User.objects.filter(email=email).exists():
+                return Response({'message': 'Este email ya está registrado'}, status=HTTP_400_BAD_REQUEST)
+            else:
+                user = serializer.save()
+                user.set_password(user.password)
+                user.save()
+                send_mail(
+                    'Bienvenido a adoptame.ga',
+                    'Gracias por registrarte en adoptame.ga.',
+                    EMAIL_HOST_USER,
+                    [email],
+                    fail_silently=False
+                )
+                return Response({'message': 'Registrado con exito.'}, status=HTTP_200_OK)
+        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 class UserView(APIView):
 
@@ -42,35 +77,4 @@ class UserView(APIView):
         }
 
         return Response(content)
-
-    def get(self, request, *args, **kwargs):
-        """
-        Recibe un email y si se encuentra en la base de datos envia un link de restauración de contraseña al email
-        """
-        try:
-            email = request.data['email']
-            email = User.objects.filter(email=email).values('email')[0]['email']
-            user_id = User.objects.filter(email=email).values('id')[0]['id']
-            token = secrets.token_urlsafe(20)
-            url = f'{self.link}/email-recover?token={token}'
-
-            send_mail(
-                'Recuperación de contraseña.',
-                f'Por favor ingrese a este link {url} para reestablecer su contraseña.',
-                EMAIL_HOST_USER,
-                [email],
-                fail_silently=False,
-            )
-            Secret(user_id=user_id, token=token).save()
-            
-            return Response({
-                    'message':f'Se va enviado un link al correo {Crypto.encrip_email(email)} con los pasos para restaurar su contraseña.'
-            }, status=HTTP_200_OK)
-
-        except Exception as e:
-            return Response({
-                'message':'Lo sentimos no tiene ningun correo registrado, comuniquese con el area de soporte!',
-
-            }, status=HTTP_400_BAD_REQUEST)
-
 
