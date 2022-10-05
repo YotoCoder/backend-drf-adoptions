@@ -30,7 +30,7 @@ CHOICES_TYPE_PET = (
 )
 
 class Pet(models.Model):
-    owner = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
     description = models.TextField(max_length=255)
     img = models.ImageField(upload_to='img/pets/')
