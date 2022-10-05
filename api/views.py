@@ -16,7 +16,7 @@ class PetView(viewsets.ModelViewSet):
         'age': ['gt', 'lt', 'exact'],
         'sex': ['exact'],
         'size': ['gt', 'lt', 'exact'],
-
+        'owner': ['exact'],
         'city': ['contains'],
     }
 
