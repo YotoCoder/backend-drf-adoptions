@@ -10,6 +10,8 @@ CHOICES_AGE = (
     ('4', '4'),
     ('5', '5'),
     ('6', '6'),
+    ('7', '7'),
+    ('999', '999'),
 )
 
 CHOICES_SEX = (
@@ -34,7 +36,7 @@ class Pet(models.Model):
     name = models.CharField(max_length=30)
     description = models.TextField(max_length=255)
     img = models.ImageField(upload_to='img/pets/')
-    age = models.CharField(max_length=1, choices=CHOICES_AGE)
+    age = models.CharField(max_length=3, choices=CHOICES_AGE)
     sex = models.CharField(max_length=10, choices=CHOICES_SEX)
     size = models.CharField(max_length=1, choices=CHOICES_SIZE)
     type_pet = models.CharField(max_length=10, choices=CHOICES_TYPE_PET)
