@@ -37,7 +37,7 @@ class Pet(models.Model):
     age = models.CharField(max_length=1, choices=CHOICES_AGE)
     sex = models.CharField(max_length=10, choices=CHOICES_SEX)
     size = models.CharField(max_length=1, choices=CHOICES_SIZE)
-    type_pet = models.CharField(max_length=10, default='Perro', choices=CHOICES_TYPE_PET)
+    type_pet = models.CharField(max_length=10, choices=CHOICES_TYPE_PET)
     city = models.CharField(max_length=66, default='Lima')
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
