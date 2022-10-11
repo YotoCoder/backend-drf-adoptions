@@ -22,3 +22,17 @@ class PetView(viewsets.ModelViewSet):
         'owner': ['exact'],
         'city': ['contains'],
     }
+
+class PetViewAll(viewsets.ModelViewSet):
+    queryset = Pet.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = PetSerializer
+    filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = {
+        'age': ['gt', 'lt', 'exact'],
+        'owner': ['exact'],
+
+    }
+
+    
