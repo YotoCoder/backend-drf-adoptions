@@ -28,6 +28,7 @@ class PetViewAll(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     serializer_class = PetSerializer
     filter_backends = [DjangoFilterBackend]
+    http_method_names = ['get']
 
     filterset_fields = {
         'age': ['gt', 'lt', 'exact'],
