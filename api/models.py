@@ -47,3 +47,8 @@ class Pet(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    # ordenar por fecha de creacion de forma descendente
+    class Meta:
+        ordering = ['-created_at']
+
