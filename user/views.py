@@ -43,13 +43,13 @@ class UserRegister(APIView):
                 user = serializer.save()
                 user.set_password(user.password)
                 user.save()
-                send_mail(
-                    'Bienvenido a adoptame.ga',
-                    'Gracias por registrarte en adoptame.ga.',
-                    EMAIL_HOST_USER,
-                    [email],
-                    fail_silently=False
-                )
+                # send_mail(
+                #   'Bienvenido a adoptame.ga',
+                #   'Gracias por registrarte en adoptame.ga.',
+                #   EMAIL_HOST_USER,
+                #   [email],
+                #   fail_silently=False
+                #)
                 return Response({'message': 'Registrado con exito.'}, status=HTTP_200_OK)
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 

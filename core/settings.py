@@ -224,6 +224,9 @@ SPECTACULAR_SETTINGS = {
 # Debug toolbar settings
 
 DEBUG_TOOLBAR_CONFIG = {
+    # no interceptar las redirecciones
+    'INTERCEPT_REDIRECTS': False,
+
     "SHOW_TOOLBAR_CALLBACK": lambda request: True,
 }
 
