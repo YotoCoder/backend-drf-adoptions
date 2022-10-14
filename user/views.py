@@ -13,7 +13,7 @@ from django.conf.global_settings import EMAIL_HOST_USER
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class = UserSerializer
 
 class UserRegister(APIView):
@@ -40,17 +40,22 @@ class UserRegister(APIView):
             if User.objects.filter(email=email).exists():
                 return Response({'message': 'Este email ya está registrado'}, status=HTTP_400_BAD_REQUEST)
             else:
-                user = serializer.save()
-                user.set_password(user.password)
-                user.save()
-                # send_mail(
-                #   'Bienvenido a adoptame.ga',
-                #   'Gracias por registrarte en adoptame.ga.',
-                #   EMAIL_HOST_USER,
-                #   [email],
-                #   fail_silently=False
-                #)
-                return Response({'message': 'Registrado con exito.'}, status=HTTP_200_OK)
+                try:
+                    
+                    send_mail(
+                    'Bienvenido a adoptame.ga',
+                    'Gracias por registrarte en adoptame.ga.',
+                    EMAIL_HOST_USER,
+                    [email],
+                    fail_silently=False
+                    )
+                    user = serializer.save()
+                    user.set_password(user.password)
+                    user.save()
+                    return Response({'message': 'Usuario registrado correctamente'}, status=HTTP_200_OK)
+                except:
+                    return Response({'message': 'Error al enviar el correo de verificación 😔'}, status=HTTP_400_BAD_REQUEST)
+                
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 class UserView(APIView):

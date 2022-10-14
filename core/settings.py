@@ -32,7 +32,7 @@ else:
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -164,7 +164,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 # Rest framework settings
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=250),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
@@ -245,13 +245,13 @@ AUTH_USER_MODEL = 'user.User'
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # SERVER_MAIL = 'no-reply@domain.com'
 
-EMAIL_HOST='smtp-mail.outlook.com'
-EMAIL_PORT=587
-DEFAULT_FROM_EMAIL='yotoelectronics@hotmail.com'
-EMAIL_HOST_USER='yotoelectronics@hotmail.com'
-EMAIL_HOST_PASSWORD='yoto-.-.'
-EMAIL_USE_TLS=True
-
+EMAIL_HOST='mail.ultrahstudios.com'
+EMAIL_PORT=465
+DEFAULT_FROM_EMAIL='adoptame@ultrahstudios.com'
+EMAIL_HOST_USER='adoptame@ultrahstudios.com'
+EMAIL_HOST_PASSWORD='@GAadoptame12903'
+# EMAIL_USE_TLS=True
+EMAIL_USE_SSL=True # usar ssl
 
 # Jazzmin settings
 
@@ -387,3 +387,36 @@ JAZZMIN_SETTINGS = {
     # "language_chooser": True,
 }
 
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": True,
+    "brand_small_text": False,
+    "brand_colour": "navbar-dark",
+    "accent": "accent-primary",
+    "navbar": "navbar-dark",
+    "no_navbar_border": False,
+    "navbar_fixed": False,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": True,
+    "sidebar": "sidebar-dark-primary",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": True,
+    "sidebar_nav_compact_style": True,
+    "sidebar_nav_legacy_style": True,
+    "sidebar_nav_flat_style": True,
+    "theme": "cyborg",
+    "dark_mode_theme": None,
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-outline-info",
+        "warning": "btn-outline-warning",
+        "danger": "btn-outline-danger",
+        "success": "btn-outline-success"
+    },
+    "actions_sticky_top": True
+}
