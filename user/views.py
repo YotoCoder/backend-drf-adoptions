@@ -16,6 +16,8 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class = UserSerializer
 
+    # encriptar password en el patch y el put 
+
 class UserRegister(APIView):
     """
     Recive una petición POST y registra un nuevo usuario
@@ -33,6 +35,9 @@ class UserRegister(APIView):
     queda pendiente agrega confirmación al usuario con un link de verificación.
 
     """
+
+    permission_classes = [permissions.IsAuthenticated]
+
     def post(self, request, format=None):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():    
@@ -52,11 +57,29 @@ class UserRegister(APIView):
                     user = serializer.save()
                     user.set_password(user.password)
                     user.save()
-                    return Response({'message': 'Usuario registrado correctamente'}, status=HTTP_200_OK)
+                    return Response({'message': 'Usuario registrado correctamente 😊!'}, status=HTTP_200_OK)
                 except:
                     return Response({'message': 'Error al enviar el correo de verificación 😔'}, status=HTTP_400_BAD_REQUEST)
                 
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+    # patch for update user data me 
+
+    def patch(self, request, format=None) -> Response:
+        """
+        Al hacer una petición PATCH, actualiza los datos del usuario
+        Parametros -> recibe el token de autenticación en el header de la petición
+        """
+
+        serializer = UserSerializer(request.user, data=request.data, partial=True)
+        if serializer.is_valid():
+            # encript password
+            user = serializer.save()
+            user.set_password(user.password)
+            user.save()
+            return Response({'message': 'Datos actualizados correctamente 😊!'}, status=HTTP_200_OK)
+        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+     
 
 class UserView(APIView):
 
