@@ -36,8 +36,6 @@ class UserRegister(APIView):
 
     """
 
-    permission_classes = [permissions.IsAuthenticated]
-
     def post(self, request, format=None):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():    
@@ -63,7 +61,24 @@ class UserRegister(APIView):
                 
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
-    # patch for update user data me 
+
+     
+class UserUpdateData(APIView):
+    """
+    Recive una petición PATCH y actualiza los datos del usuario
+    los datos del usuario se reciben en el body de la petición
+    en formato JSON, se valida que el email no exista en la base de datos
+    y se envia un correo de bienvenida al usuario.
+
+    {
+        "password": "password",
+        "username": "username",
+        "email": "
+        "phone": "925119585"
+    }
+
+    """
+    permission_classes = [permissions.IsAuthenticated]
 
     def patch(self, request, format=None) -> Response:
         """
@@ -79,7 +94,7 @@ class UserRegister(APIView):
             user.save()
             return Response({'message': 'Datos actualizados correctamente 😊!'}, status=HTTP_200_OK)
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
-     
+
 
 class UserView(APIView):
 
