@@ -89,9 +89,7 @@ class UserUpdateData(APIView):
         serializer = UserSerializer(request.user, data=request.data, partial=True)
         if serializer.is_valid():
             # encript password
-            user = serializer.save()
-            user.set_password(user.password)
-            user.save()
+            serializer.save()
             return Response({'message': 'Datos actualizados correctamente 😊!'}, status=HTTP_200_OK)
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
