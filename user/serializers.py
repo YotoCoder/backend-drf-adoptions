@@ -7,3 +7,11 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
         read_only_fields = ('create_at',)
+
+        # VALORES MINIMOS PARA EL REGISTRO DE UN USUARIO
+        extra_kwargs = {
+            'password': {'write_only': True, 'min_length': 4},
+            'username': {'min_length': 4},
+            'email': {'min_length': 9},
+            'phone': {'min_length': 9},
+        }
