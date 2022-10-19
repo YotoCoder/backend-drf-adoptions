@@ -45,13 +45,13 @@ class UserRegister(APIView):
             else:
                 try:
                     
-                    send_mail(
-                    'Bienvenido a adoptame.ga',
-                    'Gracias por registrarte en adoptame.ga.',
-                    EMAIL_HOST_USER,
-                    [email],
-                    fail_silently=False
-                    )
+                    # send_mail(
+                    # 'Bienvenido a adoptame.ga',
+                    # 'Gracias por registrarte en adoptame.ga.',
+                    # EMAIL_HOST_USER,
+                    # [email],
+                    # fail_silently=False
+                    # )
                     user = serializer.save()
                     user.set_password(user.password)
                     user.save()
