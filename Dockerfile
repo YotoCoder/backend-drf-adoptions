@@ -1,16 +1,11 @@
-FROM python:alpine3.8
+FROM python:3.9
 
-COPY . /app
+ENV PYTHONUNBUFFERED 1
 
-WORKDIR /app
+RUN mkdir /code
+WORKDIR /code
 
-RUN apk update && apk upgrade
+COPY requirements.txt /code/
+RUN pip install -r requirements.txt
 
-RUN apk add --no-cache --virtual .build-deps gcc musl-dev \
-    && pip install -r requirements.txt \
-    && apk del .build-deps gcc musl-dev
-
-# RUN pip install -r requirements.txt
-
-
-# RUN python manage.py collectstatic --no-input
+COPY . /code/
