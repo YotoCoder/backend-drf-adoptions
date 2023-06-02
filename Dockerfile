@@ -4,6 +4,8 @@ COPY . /app
 
 WORKDIR /app
 
+RUN apk update && apk upgrade
+
 RUN apk add --no-cache --virtual .build-deps gcc musl-dev \
     && pip install -r requirements.txt \
     && apk del .build-deps gcc musl-dev
